@@ -18,8 +18,7 @@ O sistema permite:
 ## Tecnologias Utilizadas
 
 - **NestJS**: Framework Node.js para construir a API REST do back-end.
-- **NextJS**: Framework Node.js para construir o front-end.
-- **VueJS**: Framework para construir o front-end (website).
+- **VueJS**: Framework Node.js para construir o front-end.
 - **TypeORM**: ORM para facilitar a integração com o banco de dados PostgreSQL.
 - **PostgreSQL**: Banco de dados relacional utilizado para armazenar os dados da aplicação.
 - **Node.js**: Ambiente de execução para o JavaScript server-side.
@@ -30,21 +29,20 @@ O sistema permite:
 
 - **Node.js**: Versão 14.x ou superior
 - **NestJS CLI**: Para gerar e executar o backend NestJS
-- **NextJS CLI**: Para gerar e executar o frontend NextJS
+- **VueJS CLI**: Para gerar e executar o frontend VueJS
 - **PostgreSQL**: Para o banco de dados
 
 ### Instalação
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/kalil-camera/cafeteria-app.git
+1. Clone o repositório.
 
-2. Entre na pasta do projeto instalar as dependencias:
+2. Entre na pasta do projeto instalar as dependencias (tanto backend quanto frontend):
    ```bash
    npm install
 
-3. Configure a conexão com o banco de dados PostgreSQL em src/app.module.ts:
-   
+3. [Backend] Configure a conexão com o banco de dados PostgreSQL em src/app.module.ts.
+   [Frontend] Caso não seja localhost, configure o IP do backend em frontend/.env.
+      
 4. Suba a API:
    ```bash
    npm run start
