@@ -2,7 +2,7 @@
 
 ## Descrição do Projeto
 
-Este projeto é parte do **Projeto Integrador Transdisciplinar 2** da faculdade e consiste no desenvolvimento de uma API REST para uma cafeteria fictícia. O objetivo principal é fornecer um backend eficiente, escalável e bem estruturado utilizando o framework **NestJS** e o banco de dados **PostgreSQL**.
+Este projeto foi desenvolvido por Kalil El Ammar Camera e é parte da disciplina de **Projeto Integrador Transdisciplinar 2** e consiste no desenvolvimento de uma API REST para uma cafeteria fictícia. O objetivo principal é fornecer um backend eficiente, escalável e bem estruturado utilizando o framework **NestJS** e o banco de dados **PostgreSQL**.
 
 ### Funcionalidades Principais
 
@@ -43,7 +43,7 @@ O sistema permite:
 3. [Backend] Configure a conexão com o banco de dados PostgreSQL em src/app.module.ts.
    [Frontend] Caso não seja localhost, configure o IP do backend em frontend/.env.
       
-4. Suba a API:
+4. Suba a API, tanto na pasta do backend quanto frontend, rodar o comando:
    ```bash
    npm run start
 
