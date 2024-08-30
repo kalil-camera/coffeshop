@@ -18,6 +18,7 @@ O sistema permite:
 ## Tecnologias Utilizadas
 
 - **NestJS**: Framework Node.js para construir a API REST do back-end.
+- **NextJS**: Framework Node.js para construir o front-end.
 - **VueJS**: Framework para construir o front-end (website).
 - **TypeORM**: ORM para facilitar a integração com o banco de dados PostgreSQL.
 - **PostgreSQL**: Banco de dados relacional utilizado para armazenar os dados da aplicação.
@@ -28,7 +29,8 @@ O sistema permite:
 ### Pré-requisitos
 
 - **Node.js**: Versão 14.x ou superior
-- **NestJS CLI**: Para gerar e executar o projeto NestJS
+- **NestJS CLI**: Para gerar e executar o backend NestJS
+- **NextJS CLI**: Para gerar e executar o frontend NextJS
 - **PostgreSQL**: Para o banco de dados
 
 ### Instalação
