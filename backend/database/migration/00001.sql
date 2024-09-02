@@ -1,85 +1,89 @@
--- Criando a tabela Cliente
-CREATE TABLE Cliente (
-    ID_Cliente SERIAL PRIMARY KEY,
-    Nome VARCHAR(100) NOT NULL,
-    Email VARCHAR(100) NOT NULL UNIQUE,
-    Senha VARCHAR(100) NOT NULL,
-    Endereco VARCHAR(200)
+-- DROP DATABASE IF EXISTS cafeteria;
+
+CREATE DATABASE cafeteria
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+CREATE TABLE cliente (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(100) NOT NULL,
+    endereco VARCHAR(200)
 );
 
--- Criando a tabela Produto
-CREATE TABLE Produto (
-    ID_Produto SERIAL PRIMARY KEY,
-    Nome VARCHAR(100) NOT NULL,
-    Descricao TEXT,
-    Preco DECIMAL(10, 2) NOT NULL,
-    Categoria VARCHAR(50)
+CREATE TABLE produto (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    preco DECIMAL(10, 2) NOT NULL,
+    categoria VARCHAR(50)
 );
 
--- Criando a tabela Pedido
-CREATE TABLE Pedido (
-    ID_Pedido SERIAL PRIMARY KEY,
+CREATE TABLE pedido (
+    id SERIAL PRIMARY KEY,
+    data_pedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status_pedido VARCHAR(50) NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    id_cliente INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id)
+);
+
+CREATE TABLE item_pedido (
+    id SERIAL PRIMARY KEY,
+    quantidade INT NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL,
+    id_pedido INT NOT NULL,
+    id_produto INT NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_produto) REFERENCES produto(id)
+);
+
+CREATE TABLE metodo_pagamento (
+    id SERIAL PRIMARY KEY,
+    tipo VARCHAR(50) NOT NULL,
+    detalhes TEXT
+);
+
+CREATE TABLE pagamento (
+    id SERIAL PRIMARY KEY,
+    valor DECIMAL(10, 2) NOT NULL,
+    status_pgto VARCHAR(50) NOT NULL,
+    id_pedido INT NOT NULL,
+    id_metodo INT NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_metodo) REFERENCES metodo_pagamento(id)
+);
+
+CREATE TABLE funcionario (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cargo VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE avaliacao (
+    id SERIAL PRIMARY KEY,
+    nota INT CHECK (Nota >= 0 AND Nota <= 5),
+    comentario TEXT,
+    id_cliente INT NOT NULL,
+    id_pedido INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id),
+    FOREIGN KEY (id_pedido) REFERENCES Pedido(id) ON DELETE CASCADE
+);
+
+CREATE TABLE notificacao (
+    id SERIAL PRIMARY KEY,
+    msg TEXT NOT NULL,
     Data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    Status VARCHAR(50) NOT NULL,
-    Total DECIMAL(10, 2) NOT NULL,
-    ID_Cliente INT NOT NULL,
-    FOREIGN KEY (ID_Cliente) REFERENCES Cliente(ID_Cliente)
-);
-
--- Criando a tabela ItemPedido
-CREATE TABLE ItemPedido (
-    ID_Item SERIAL PRIMARY KEY,
-    Quantidade INT NOT NULL,
-    Subtotal DECIMAL(10, 2) NOT NULL,
-    ID_Pedido INT NOT NULL,
-    ID_Produto INT NOT NULL,
-    FOREIGN KEY (ID_Pedido) REFERENCES Pedido(ID_Pedido) ON DELETE CASCADE,
-    FOREIGN KEY (ID_Produto) REFERENCES Produto(ID_Produto)
-);
-
--- Criando a tabela MetodoPagamento
-CREATE TABLE MetodoPagamento (
-    ID_Metodo SERIAL PRIMARY KEY,
-    Tipo VARCHAR(50) NOT NULL,
-    Detalhes TEXT
-);
-
--- Criando a tabela Pagamento
-CREATE TABLE Pagamento (
-    ID_Pagamento SERIAL PRIMARY KEY,
-    Valor DECIMAL(10, 2) NOT NULL,
-    Status VARCHAR(50) NOT NULL,
-    ID_Pedido INT NOT NULL,
-    ID_Metodo INT NOT NULL,
-    FOREIGN KEY (ID_Pedido) REFERENCES Pedido(ID_Pedido) ON DELETE CASCADE,
-    FOREIGN KEY (ID_Metodo) REFERENCES MetodoPagamento(ID_Metodo)
-);
-
--- Criando a tabela Funcionario
-CREATE TABLE Funcionario (
-    ID_Funcionario SERIAL PRIMARY KEY,
-    Nome VARCHAR(100) NOT NULL,
-    Cargo VARCHAR(50) NOT NULL
-);
-
--- Criando a tabela Avaliacao
-CREATE TABLE Avaliacao (
-    ID_Avaliacao SERIAL PRIMARY KEY,
-    Nota INT CHECK (Nota >= 1 AND Nota <= 5),
-    Comentario TEXT,
-    ID_Cliente INT NOT NULL,
-    ID_Pedido INT NOT NULL,
-    FOREIGN KEY (ID_Cliente) REFERENCES Cliente(ID_Cliente),
-    FOREIGN KEY (ID_Pedido) REFERENCES Pedido(ID_Pedido) ON DELETE CASCADE
-);
-
--- Criando a tabela Notificacao
-CREATE TABLE Notificacao (
-    ID_Notificacao SERIAL PRIMARY KEY,
-    Mensagem TEXT NOT NULL,
-    Data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    ID_Cliente INT NOT NULL,
-    ID_Pedido INT NOT NULL,
-    FOREIGN KEY (ID_Cliente) REFERENCES Cliente(ID_Cliente),
-    FOREIGN KEY (ID_Pedido) REFERENCES Pedido(ID_Pedido) ON DELETE CASCADE
+    id_cliente INT NOT NULL,
+    Id_pedido INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id),
+    FOREIGN KEY (Id_pedido) REFERENCES Pedido(id) ON DELETE CASCADE
 );
