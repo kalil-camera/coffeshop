@@ -70,7 +70,7 @@ CREATE TABLE funcionario (
 
 CREATE TABLE avaliacao (
     id SERIAL PRIMARY KEY,
-    nota INT CHECK (Nota >= 0 AND Nota <= 5),
+    nota INT NOT NULL,
     comentario TEXT,
     id_cliente INT NOT NULL,
     id_pedido INT NOT NULL,
