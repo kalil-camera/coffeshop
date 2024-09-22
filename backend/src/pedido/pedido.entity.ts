@@ -16,13 +16,24 @@ export class Pedido {
   id: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  @ApiProperty({ description: 'Nome do cliente', example: 'KALIL CAMERA' })
+  @ApiProperty({
+    description: 'Data do Pedido',
+    example: '2024-09-25T18:25:43.511Z',
+  })
   data_pedido: Date;
 
   @Column({ type: 'varchar', length: 50 })
+  @ApiProperty({
+    description: 'Status do Pedido',
+    example: 'EM ROTA DE ENTREGA',
+  })
   status_pedido: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @ApiProperty({
+    description: 'Valor Total',
+    example: '52.95',
+  })
   total: number;
 
   @ManyToOne(() => Cliente)
