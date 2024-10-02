@@ -2,7 +2,7 @@
 
 ## Descrição do Projeto
 
-Este projeto foi desenvolvido por Kalil El Ammar Camera e é parte da disciplina de **Projeto Integrador Transdisciplinar 2** e consiste no desenvolvimento de uma API REST para uma cafeteria fictícia. O objetivo principal é fornecer um backend eficiente, escalável e bem estruturado utilizando o framework **NestJS** e o banco de dados **PostgreSQL**.
+Este projeto foi desenvolvido por Kalil El Ammar Camera e é parte da disciplina de **Projeto Integrador Transdisciplinar 2** e consiste no desenvolvimento de uma API REST para uma cafeteria fictícia. O objetivo principal é fornecer um backend eficiente, escalável e bem estruturado utilizando o framework **NestJS** e o banco de dados **PostgreSQL**. O front end fica por conta do **Bubble.io**.
 
 ### Funcionalidades Principais
 
@@ -18,7 +18,7 @@ O sistema permite:
 ## Tecnologias Utilizadas
 
 - **NestJS**: Framework Node.js para construir a API REST do back-end.
-- **VueJS**: Framework Node.js para construir o front-end.
+- **Bubble.io**: Ferramenta low-code para construção do frontend.
 - **TypeORM**: ORM para facilitar a integração com o banco de dados PostgreSQL.
 - **PostgreSQL**: Banco de dados relacional utilizado para armazenar os dados da aplicação.
 - **Node.js**: Ambiente de execução para o JavaScript server-side.
@@ -36,14 +36,11 @@ O sistema permite:
 
 1. Clone o repositório.
 
-2. Entre na pasta do projeto instalar as dependencias (tanto backend quanto frontend):
-   ```bash
-   npm install
+2. Para subir o [Backend] local:
+   Entre na pasta backend, rode o comando: npm install.
+   Configure a conexão com o banco de dados PostgreSQL em backend/src/app.module.ts. 
+   Em seguida, rode o comando npm start.
 
-3. [Backend] Configure a conexão com o banco de dados PostgreSQL em src/app.module.ts.
-   [Frontend] Caso não seja localhost, configure o IP do backend em frontend/.env.
-      
-4. Suba a API, tanto na pasta do backend quanto frontend, rodar o comando:
-   ```bash
-   npm run start
+3. Como acessar o projeto:
 
+Swagger do Back-end: http://127.0.0.1:3000/api - Isso é tipo o Postman, pode fazer as requests diretamente para o back-end, manipulando o JSON.
