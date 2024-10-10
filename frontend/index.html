@@ -18,12 +18,19 @@
             </ul>
         </nav>
     </header>
+ <div id="notificacao" class="hidden"></div>
 
     <main>
         <section class="catalogo">
             <h2>Catálogo de Produtos</h2>
             <div id="produtos-container"></div> <!-- Container para os produtos -->
         </section>
+              
+<div class="fazer-pedido-container">
+    <!-- Redireciona para carrinho.html ao invés de chamar a função exibirCarrinho -->
+    <button id="fazer-pedido" onclick="window.location.href='carrinho.html'">Fazer Pedido</button>
+</div>
+
     </main>
 
     <script src="js/script.js"></script>

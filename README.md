@@ -18,7 +18,7 @@ O sistema permite:
 ## Tecnologias Utilizadas
 
 - **NestJS**: Framework Node.js para construir a API REST do back-end.
-- **Bubble.io**: Ferramenta low-code para construção do frontend.
+- **HTML, CSS e JavaScript**: Front-end construido de maneira mais clássica, porém com boa performance.
 - **TypeORM**: ORM para facilitar a integração com o banco de dados PostgreSQL.
 - **PostgreSQL**: Banco de dados relacional utilizado para armazenar os dados da aplicação.
 - **Node.js**: Ambiente de execução para o JavaScript server-side.
@@ -36,11 +36,17 @@ O sistema permite:
 
 1. Clone o repositório.
 
-2. Para subir o [Backend] local:
+2. Para subir o [Back-end] local:
    Entre na pasta backend, rode o comando: npm install.
    Configure a conexão com o banco de dados PostgreSQL em backend/src/app.module.ts. 
    Em seguida, rode o comando npm start.
 
-3. Como acessar o projeto:
+3. Para subir o [Front-end] local:
+   Instale a extensão Live Server para o VS Code.
+   Abra o index.html e inicie o servidor clicando no canto inferior direito.
 
+
+4. Como acessar o projeto:
+
+Frontend (usando o live server): http://127.0.0.1:5500 (ou a porta escolhida)
 Swagger do Back-end: http://127.0.0.1:3000/api - Isso é tipo o Postman, pode fazer as requests diretamente para o back-end, manipulando o JSON.

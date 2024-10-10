@@ -25,38 +25,44 @@ h1, h2, h3 {
     margin: 20px 0;
 }
 
-/* Centralizar o botão "Fazer Pedido" */
-a.botao {
-    display: block; /* Para ocupar a linha inteira */
-    text-align: center; /* Centraliza o texto do botão */
-    margin: 20px auto; /* Margem em cima e embaixo, centralizando horizontalmente */
-    width: 150px; /* Largura fixa para o botão */
+.fazer-pedido-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
-/* Tornar as divs externas aos produtos invisíveis */
+#fazer-pedido {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#fazer-pedido:hover {
+    background-color: #45a049;
+}
+
 .produto {
-    border: none; /* Remove a borda */
-    background-color: transparent; /* Fundo transparente */
-    padding: 0; /* Remove o preenchimento */
-    margin: 10px 0; /* Margem entre os produtos */
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 10px 0;
 }
 
-/* Estilo opcional para manter a estrutura */
 .catalogo {
     display: flex;
-    flex-direction: column; /* Empilha os produtos verticalmente */
-    align-items: center; /* Centraliza os produtos */
-}
-
-/* Adiciona um pouco de espaçamento e um fundo no catálogo */
-.catalogo {
+    flex-direction: column;
+    align-items: center;
     margin: 20px;
 }
 
-
 .produto img {
-    width: 150px; /* Ajustar a largura da imagem */
-    height: auto; /* Manter a proporção */
+    width: 150px;
+    height: auto;
 }
 
 .produto p {
@@ -81,15 +87,15 @@ button:hover, .botao:hover {
 .carrinho {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza os itens na horizontal */
-    margin: 20px; /* Adiciona uma margem ao redor do carrinho */
+    align-items: center;
+    margin: 20px;
 }
 
 .carrinho ul {
     list-style-type: none;
     padding: 0;
-    width: 100%; /* Para ocupar a largura do contêiner pai */
-    max-width: 600px; /* Largura máxima para o carrinho */
+    width: 100%;
+    max-width: 600px;
 }
 
 .carrinho ul li {
@@ -97,39 +103,61 @@ button:hover, .botao:hover {
     border-bottom: 1px solid #ccc;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Para alinhar imagem e texto */
+    justify-content: space-between;
+}
+.botoes-carrinho {
+    display: flex;
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-top: 20px; /* Espaço acima dos botões */
+}
+
+.botao-limpar {
+    background-color: #d9534f; /* Cor de fundo do botão "Limpar Carrinho" */
+}
+
+.botao-limpar:hover {
+    background-color: #c9302c; /* Cor ao passar o mouse */
+}
+
+.carrinho ul li button {
+    background-color: #d9534f; /* Cor de fundo do botão "Remover" */
+    color: white; /* Texto branco */
+    border: none;
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+    margin-left: 10px; /* Espaçamento à esquerda do botão "Remover" */
+}
+
+.carrinho ul li button:hover {
+    background-color: #c9302c; /* Cor ao passar o mouse */
 }
 
 .carrinho ul li img {
-    width: 50px; /* Ajustar a largura da imagem no carrinho */
-    height: auto; /* Manter a proporção */
-    margin-right: 10px; /* Espaço entre a imagem e o texto */
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
 }
 
 h3 {
-    text-align: center; /* Centraliza o texto do total */
+    text-align: center;
 }
-
 
 .confirmacao {
     text-align: center;
     padding: 50px;
 }
 
-.notificacao {
+#notificacao {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
     position: fixed;
-    top: 10px; /* Posição a partir do topo */
-    left: 50%;
-    transform: translateX(-50%); /* Centraliza horizontalmente */
-    background-color: #4CAF50; /* Cor de fundo verde */
-    color: white; /* Texto branco */
-    padding: 15px;
-    border-radius: 5px; /* Bordas arredondadas */
-    z-index: 1000; /* Garante que a notificação fique acima de outros elementos */
-    transition: opacity 0.5s ease; /* Transição suave */
-    opacity: 0; /* Inicialmente invisível */
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    border-radius: 5px;
+    display: none;
 }
-
 
 form {
     display: flex;
@@ -145,7 +173,7 @@ form div {
 .mensagem {
     margin-top: 20px;
     padding: 10px;
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50;
     color: white;
     text-align: center;
     border-radius: 5px;
@@ -156,44 +184,42 @@ nav {
 }
 
 #menu-button {
-    background-color: #4CAF50; /* Cor do botão */
-    color: white; /* Texto branco */
-    padding: 10px 15px; /* Espaçamento interno */
-    border: none; /* Sem borda */
-    border-radius: 5px; /* Bordas arredondadas */
-    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 #dropdown-menu {
-    list-style-type: none; /* Remove marcadores da lista */
-    padding: 0; /* Remove padding padrão */
-    margin: 0; /* Remove margin padrão */
-    position: absolute; /* Permite sobreposição */
-    top: 100%; /* Posiciona abaixo do botão */
-    left: 0; /* Alinha à esquerda */
-    background-color: white; /* Fundo branco */
-    border: 1px solid #ddd; /* Borda cinza */
-    z-index: 1000; /* Garante que fique acima de outros elementos */
-    width: 150px; /* Largura fixa do menu */
-    display: none; /* Esconde o menu por padrão */
-}
-
-#dropdown-menu li {
-    padding: 10px; /* Espaçamento interno */
-}
-
-#dropdown-menu li a {
-    text-decoration: none; /* Remove sublinhado */
-    color: black; /* Texto preto */
-    display: block; /* Faz com que toda a área do item seja clicável */
-}
-
-#dropdown-menu li:hover {
-    background-color: #f1f1f1; /* Cor de fundo ao passar o mouse */
-}
-
-/* Classe para esconder o menu */
-.hidden {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    z-index: 1000;
+    width: 150px;
     display: none;
 }
 
+#dropdown-menu li {
+    padding: 10px;
+}
+
+#dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+#dropdown-menu li:hover {
+    background-color: #f1f1f1;
+}
+
+.hidden {
+    display: none;
+}

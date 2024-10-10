@@ -4,7 +4,7 @@ let carrinho = [];
 function adicionarAoCarrinho(produto, preco, imagem) {
   carrinho.push({ produto, preco, imagem });
   console.log(`Adicionado ao carrinho: ${produto}`);
-  salvarCarrinho();
+  salvarCarrinho(); // Salva no localStorage
   mostrarNotificacao(`${produto} adicionado ao carrinho!`); // Exibe a notificação
 }
 
@@ -19,8 +19,8 @@ function mostrarNotificacao(mensagem) {
     notificacao.style.opacity = "0"; // Faz a notificação desaparecer
     setTimeout(() => {
       notificacao.style.display = "none"; // Esconde a notificação após a transição
-    }, 500); // Tempo de espera igual ao tempo de transição
-  }, 2000); // Duração que a notificação permanece visível
+    }, 50); // Tempo de espera igual ao tempo de transição
+  }, 3000); // Duração que a notificação permanece visível
 }
 
 // Restante do código continua como antes...
@@ -37,7 +37,6 @@ function carregarCarrinho() {
     carrinho = JSON.parse(carrinhoSalvo);
   }
 }
-
 // Função para exibir os itens no carrinho
 function exibirCarrinho() {
   const listaCarrinho = document.getElementById("lista-carrinho");
@@ -48,17 +47,33 @@ function exibirCarrinho() {
   if (carrinho.length === 0) {
     listaCarrinho.innerHTML = "<li>Carrinho vazio</li>"; // Mensagem para carrinho vazio
   } else {
-    carrinho.forEach((item) => {
+    carrinho.forEach((item, index) => {
       const li = document.createElement("li");
-      li.innerHTML = `<img src="${item.imagem}" alt="${item.produto}"><span>${
-        item.produto
-      } - R$ ${item.preco.toFixed(2)}</span>`;
+      li.innerHTML = `
+                <img src="${item.imagem}" alt="${item.produto}">
+                <span>${item.produto} - R$ ${item.preco.toFixed(2)}</span>
+                <button onclick="removerDoCarrinho(${index})">Remover</button>
+            `;
       listaCarrinho.appendChild(li);
       total += item.preco;
     });
   }
 
   totalSpan.textContent = total.toFixed(2);
+}
+
+// Função para remover um item do carrinho
+function removerDoCarrinho(index) {
+  carrinho.splice(index, 1); // Remove o item do carrinho
+  salvarCarrinho(); // Salva o carrinho atualizado
+  exibirCarrinho(); // Atualiza a exibição do carrinho
+}
+
+// Função para limpar o carrinho
+function limparCarrinho() {
+  carrinho = []; // Limpa o array do carrinho
+  salvarCarrinho(); // Salva a mudança no localStorage
+  exibirCarrinho(); // Atualiza a exibição do carrinho
 }
 
 // Carregar o carrinho ao entrar na página do carrinho
@@ -106,27 +121,40 @@ async function cadastrarProduto(event) {
   }
 }
 
-// Função para carregar os produtos
 async function carregarProdutos() {
   try {
     const response = await fetch("http://127.0.0.1:3000/produtos");
     if (!response.ok) {
       throw new Error("Erro ao carregar produtos.");
     }
+
     const produtos = await response.json();
     const container = document.getElementById("produtos-container");
 
+    // Verifica se o container existe
+    if (!container) {
+      return; // Sai da função se o elemento não existir
+    }
+
+    container.innerHTML = ""; // Limpa o container antes de adicionar novos produtos
+
+    //converte o preço para exibição no front
     produtos.forEach((produto) => {
+      const preco = parseFloat(produto.preco);
+      if (isNaN(preco)) {
+        return;
+      }
+
       const produtoDiv = document.createElement("div");
       produtoDiv.classList.add("produto");
       produtoDiv.innerHTML = `
-                <img src="${produto.imagemlink}" alt="${produto.nome}" />
-                <h3>${produto.nome}</h3>
-                <p>R$ ${produto.preco.toFixed(2)}</p>
-                <button onclick="adicionarAoCarrinho('${produto.nome}', ${
-        produto.preco
-      }, '${produto.imagemlink}')">Adicionar ao Carrinho</button>
-            `;
+        <img src="image/${produto.imagemlink}.jpg" alt="${produto.nome}" />
+        <h3>${produto.nome}</h3>
+        <p>R$ ${preco.toFixed(2)}</p>
+        <button onclick="adicionarAoCarrinho('${produto.nome}', ${preco}, '${
+        produto.imagemlink
+      }')">Adicionar ao Carrinho</button>
+      `;
       container.appendChild(produtoDiv);
     });
   } catch (error) {
@@ -134,6 +162,9 @@ async function carregarProdutos() {
     alert("Erro ao carregar produtos. Tente novamente mais tarde.");
   }
 }
+
+
+
 
 // Carrega os produtos ao iniciar a página
 window.onload = carregarProdutos;

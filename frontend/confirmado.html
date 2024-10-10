@@ -13,10 +13,15 @@
 
     <main>
         <section class="confirmacao">
-            <h2>Obrigado pelo seu pedido!</h2>
-            <p>Seu pedido foi confirmado e está sendo preparado.</p>
-            <a href="index.html" class="botao">Voltar ao Catálogo</a>
+            <h2>Obrigado!</h2>
+            <p>Seu pedido está sendo preparado e em breve sairá para entrega!</p>
+            <a href="index.html" class="botao">Voltar ao Menu</a>
         </section>
     </main>
+
+    <script>
+        // Limpar o carrinho ao carregar a página de confirmação
+        localStorage.removeItem("carrinho");
+    </script>
 </body>
 </html>
