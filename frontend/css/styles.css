@@ -1,0 +1,199 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    margin: 0 0 10px;
+}
+
+.catalogo .produto, .carrinho ul {
+    margin: 20px 0;
+}
+
+/* Centralizar o botão "Fazer Pedido" */
+a.botao {
+    display: block; /* Para ocupar a linha inteira */
+    text-align: center; /* Centraliza o texto do botão */
+    margin: 20px auto; /* Margem em cima e embaixo, centralizando horizontalmente */
+    width: 150px; /* Largura fixa para o botão */
+}
+
+/* Tornar as divs externas aos produtos invisíveis */
+.produto {
+    border: none; /* Remove a borda */
+    background-color: transparent; /* Fundo transparente */
+    padding: 0; /* Remove o preenchimento */
+    margin: 10px 0; /* Margem entre os produtos */
+}
+
+/* Estilo opcional para manter a estrutura */
+.catalogo {
+    display: flex;
+    flex-direction: column; /* Empilha os produtos verticalmente */
+    align-items: center; /* Centraliza os produtos */
+}
+
+/* Adiciona um pouco de espaçamento e um fundo no catálogo */
+.catalogo {
+    margin: 20px;
+}
+
+
+.produto img {
+    width: 150px; /* Ajustar a largura da imagem */
+    height: auto; /* Manter a proporção */
+}
+
+.produto p {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+button, .botao {
+    background-color: #5cb85c;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+button:hover, .botao:hover {
+    background-color: #4cae4c;
+}
+
+.carrinho {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os itens na horizontal */
+    margin: 20px; /* Adiciona uma margem ao redor do carrinho */
+}
+
+.carrinho ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%; /* Para ocupar a largura do contêiner pai */
+    max-width: 600px; /* Largura máxima para o carrinho */
+}
+
+.carrinho ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Para alinhar imagem e texto */
+}
+
+.carrinho ul li img {
+    width: 50px; /* Ajustar a largura da imagem no carrinho */
+    height: auto; /* Manter a proporção */
+    margin-right: 10px; /* Espaço entre a imagem e o texto */
+}
+
+h3 {
+    text-align: center; /* Centraliza o texto do total */
+}
+
+
+.confirmacao {
+    text-align: center;
+    padding: 50px;
+}
+
+.notificacao {
+    position: fixed;
+    top: 10px; /* Posição a partir do topo */
+    left: 50%;
+    transform: translateX(-50%); /* Centraliza horizontalmente */
+    background-color: #4CAF50; /* Cor de fundo verde */
+    color: white; /* Texto branco */
+    padding: 15px;
+    border-radius: 5px; /* Bordas arredondadas */
+    z-index: 1000; /* Garante que a notificação fique acima de outros elementos */
+    transition: opacity 0.5s ease; /* Transição suave */
+    opacity: 0; /* Inicialmente invisível */
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+.mensagem {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+}
+
+nav {
+    position: relative;
+}
+
+#menu-button {
+    background-color: #4CAF50; /* Cor do botão */
+    color: white; /* Texto branco */
+    padding: 10px 15px; /* Espaçamento interno */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+}
+
+#dropdown-menu {
+    list-style-type: none; /* Remove marcadores da lista */
+    padding: 0; /* Remove padding padrão */
+    margin: 0; /* Remove margin padrão */
+    position: absolute; /* Permite sobreposição */
+    top: 100%; /* Posiciona abaixo do botão */
+    left: 0; /* Alinha à esquerda */
+    background-color: white; /* Fundo branco */
+    border: 1px solid #ddd; /* Borda cinza */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+    width: 150px; /* Largura fixa do menu */
+    display: none; /* Esconde o menu por padrão */
+}
+
+#dropdown-menu li {
+    padding: 10px; /* Espaçamento interno */
+}
+
+#dropdown-menu li a {
+    text-decoration: none; /* Remove sublinhado */
+    color: black; /* Texto preto */
+    display: block; /* Faz com que toda a área do item seja clicável */
+}
+
+#dropdown-menu li:hover {
+    background-color: #f1f1f1; /* Cor de fundo ao passar o mouse */
+}
+
+/* Classe para esconder o menu */
+.hidden {
+    display: none;
+}
+

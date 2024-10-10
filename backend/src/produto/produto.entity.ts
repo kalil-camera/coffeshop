@@ -11,15 +11,11 @@ export class Produto {
   @ApiProperty({ description: 'Nome do produto' })
   nome: string;
 
-  @Column('text', { nullable: true })
-  @ApiProperty({ description: 'Descrição do produto', nullable: true })
-  descricao: string;
-
   @Column('decimal', { precision: 10, scale: 2 })
   @ApiProperty({ description: 'Preço do produto' })
   preco: number;
 
   @Column({ length: 50, nullable: true })
-  @ApiProperty({ description: 'Categoria do produto', nullable: true })
-  categoria: string;
+  @ApiProperty({ description: 'Link da Imagem', nullable: false })
+  imagemlink: string;
 }
