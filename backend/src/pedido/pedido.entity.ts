@@ -6,7 +6,6 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-import { Cliente } from '../cliente/cliente.entity';
 import { ItemPedido } from '../item-pedido/item-pedido.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -36,9 +35,7 @@ export class Pedido {
   })
   total: number;
 
-  @ManyToOne(() => Cliente)
-  @JoinColumn({ name: 'id_cliente' })
-  cliente: Cliente;
+
 
   @OneToMany(() => ItemPedido, (itemPedido) => itemPedido.pedido, {
     cascade: true,

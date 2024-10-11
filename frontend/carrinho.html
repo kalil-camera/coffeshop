@@ -3,27 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho de Compras - Cafeteria</title>
+    <title>Carrinho </title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+        <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="carrinho.html">Carrinho</a></li>
+                <li><a href="pedidos.html">Meus Pedidos</a></li>
+            </ul>
+        </nav>
+    </header>
     <header>
-        <h1>Seu Carrinho</h1>
+        <h1>Carrinho</h1>
     </header>
 
-    <main>
-        <section class="carrinho">
-            <ul id="lista-carrinho">
-                <!-- Itens do carrinho serão inseridos aqui -->
-            </ul>
-            <h3>Total: R$ <span id="total"></span></h3>
+<main>
+    <section class="carrinho">
+        <h2 id="mensagem" style="display: none; color: green;"></h2> 
+        <ul id="lista-carrinho">
+        </ul>
+        <h3>Total: R$ <span id="total"></span></h3>
 
-            <div class="botoes-carrinho">
-                <button onclick="limparCarrinho()" class="botao botao-limpar">Limpar Carrinho</button>
-                <a href="confirmado.html" class="botao">Confirmar Pedido</a>
-            </div>
-        </section>
-    </main>
+        <div class="botoes-carrinho">
+            <button onclick="limparCarrinho()" class="botao botao-limpar">Limpar Carrinho</button>
+            <a href="#" class="botao" onclick="confirmarPedido()">Confirmar Pedido</a> 
+        </div>
+    </section>
+</main>
 
     <script src="js/script.js"></script>
 </body>

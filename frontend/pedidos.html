@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafeteria</title>
+    <title>Meus Pedidos</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -15,21 +15,20 @@
                 <li><a href="pedidos.html">Meus Pedidos</a></li>
             </ul>
         </nav>
-        
     </header>
-    <header><h1>Cafeteria - Menu</h1></header>
-    <div id="notificacao" class="hidden"></div>
 
     <main>
-        <section class="catalogo">
-            <div id="produtos-container"></div> 
+        <h1>Meus Pedidos</h1>
+        <section class="pedidos">
+            <ul id="lista-pedidos">
+            </ul>
         </section>
-
-        <div class="fazer-pedido-container">
-            <button id="fazer-pedido" onclick="window.location.href='carrinho.html'">Fazer Pedido</button>
-        </div>
     </main>
 
     <script src="js/script.js"></script>
+    <script>
+        // Carregar pedido s ao iniciar a página
+        window.onload = carregarPedidos;
+    </script>
 </body>
 </html>

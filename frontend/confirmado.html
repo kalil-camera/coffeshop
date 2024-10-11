@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedido Confirmado - Cafeteria</title>
+    <title>Pedido Confirmado</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+        <header>
+        <h1>Cafeteria</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="carrinho.html">Carrinho</a></li>
+                <li><a href="pedidos.html">Meus Pedidos</a></li>
+            </ul>
+        </nav>
+    </header>
     <header>
         <h1>Pedido Confirmado</h1>
     </header>
@@ -20,7 +30,6 @@
     </main>
 
     <script>
-        // Limpar o carrinho ao carregar a página de confirmação
         localStorage.removeItem("carrinho");
     </script>
 </body>

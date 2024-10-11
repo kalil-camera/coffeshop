@@ -30,9 +30,7 @@ CREATE TABLE pedido (
     id SERIAL PRIMARY KEY,
     data_pedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     status_pedido VARCHAR(50) NOT NULL,
-    total DECIMAL(10, 2) NOT NULL,
-    id_cliente INT NOT NULL,
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id)
+    total DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE item_pedido (

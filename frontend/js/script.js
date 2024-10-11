@@ -1,43 +1,36 @@
 let carrinho = [];
 
-// Função para adicionar ao carrinho
 function adicionarAoCarrinho(produto, preco, imagem) {
   carrinho.push({ produto, preco, imagem });
   console.log(`Adicionado ao carrinho: ${produto}`);
-  salvarCarrinho(); // Salva no localStorage
-  mostrarNotificacao(`${produto} adicionado ao carrinho!`); // Exibe a notificação
+  salvarCarrinho();
+  mostrarNotificacao(`${produto} adicionado ao carrinho!`);
 }
 
-// Função para mostrar a notificação
 function mostrarNotificacao(mensagem) {
   const notificacao = document.getElementById("notificacao");
   notificacao.textContent = mensagem;
-  notificacao.style.display = "block"; // Torna a notificação visível
-  notificacao.style.opacity = "1"; // Torna a notificação visível
+  notificacao.style.display = "block";
+  notificacao.style.opacity = "1";
 
   setTimeout(() => {
-    notificacao.style.opacity = "0"; // Faz a notificação desaparecer
+    notificacao.style.opacity = "0";
     setTimeout(() => {
-      notificacao.style.display = "none"; // Esconde a notificação após a transição
-    }, 50); // Tempo de espera igual ao tempo de transição
-  }, 3000); // Duração que a notificação permanece visível
+      notificacao.style.display = "none";
+    }, 50);
+  }, 3000);
 }
 
-// Restante do código continua como antes...
-
-// Função para salvar o carrinho no localStorage
 function salvarCarrinho() {
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
-// Função para carregar os itens do carrinho
 function carregarCarrinho() {
   const carrinhoSalvo = localStorage.getItem("carrinho");
   if (carrinhoSalvo) {
     carrinho = JSON.parse(carrinhoSalvo);
   }
 }
-// Função para exibir os itens no carrinho
 function exibirCarrinho() {
   const listaCarrinho = document.getElementById("lista-carrinho");
   const totalSpan = document.getElementById("total");
@@ -45,12 +38,13 @@ function exibirCarrinho() {
   let total = 0;
 
   if (carrinho.length === 0) {
-    listaCarrinho.innerHTML = "<li>Carrinho vazio</li>"; // Mensagem para carrinho vazio
+    listaCarrinho.innerHTML = "<li>Carrinho vazio</li>";
   } else {
     carrinho.forEach((item, index) => {
+      const imgPath = `image/${item.imagem}.jpg`;
       const li = document.createElement("li");
       li.innerHTML = `
-                <img src="${item.imagem}" alt="${item.produto}">
+                <img src="${imgPath}" alt="${item.produto}">
                 <span>${item.produto} - R$ ${item.preco.toFixed(2)}</span>
                 <button onclick="removerDoCarrinho(${index})">Remover</button>
             `;
@@ -62,29 +56,25 @@ function exibirCarrinho() {
   totalSpan.textContent = total.toFixed(2);
 }
 
-// Função para remover um item do carrinho
 function removerDoCarrinho(index) {
-  carrinho.splice(index, 1); // Remove o item do carrinho
-  salvarCarrinho(); // Salva o carrinho atualizado
-  exibirCarrinho(); // Atualiza a exibição do carrinho
+  carrinho.splice(index, 1);
+  salvarCarrinho();
+  exibirCarrinho();
 }
 
-// Função para limpar o carrinho
 function limparCarrinho() {
-  carrinho = []; // Limpa o array do carrinho
-  salvarCarrinho(); // Salva a mudança no localStorage
-  exibirCarrinho(); // Atualiza a exibição do carrinho
+  carrinho = [];
+  salvarCarrinho();
+  exibirCarrinho();
 }
 
-// Carregar o carrinho ao entrar na página do carrinho
 if (window.location.pathname.includes("carrinho.html")) {
   carregarCarrinho();
-  exibirCarrinho(); // Chame a função de exibição após carregar o carrinho
+  exibirCarrinho();
 }
 
-// Função para cadastrar um produto
 async function cadastrarProduto(event) {
-  event.preventDefault(); // Evita o envio padrão do formulário
+  event.preventDefault();
 
   const nome = document.getElementById("nome").value;
   const preco = document.getElementById("preco").value;
@@ -131,14 +121,12 @@ async function carregarProdutos() {
     const produtos = await response.json();
     const container = document.getElementById("produtos-container");
 
-    // Verifica se o container existe
     if (!container) {
-      return; // Sai da função se o elemento não existir
+      return;
     }
 
-    container.innerHTML = ""; // Limpa o container antes de adicionar novos produtos
+    container.innerHTML = "";
 
-    //converte o preço para exibição no front
     produtos.forEach((produto) => {
       const preco = parseFloat(produto.preco);
       if (isNaN(preco)) {
@@ -159,18 +147,94 @@ async function carregarProdutos() {
     });
   } catch (error) {
     console.error(error);
-    alert("Erro ao carregar produtos. Tente novamente mais tarde.");
   }
 }
 
-
-
-
-// Carrega os produtos ao iniciar a página
+// carreg a produtos no iniciaa
 window.onload = carregarProdutos;
 
-// Função para abrir e fechar o menu dropdown
-function toggleMenu() {
-  const menu = document.getElementById("dropdown-menu");
-  menu.classList.toggle("hidden"); // Alterna a classe 'hidden'
+async function confirmarPedido() {
+  if (carrinho.length === 0) {
+    alert("O carrinho está vazio. Adicione itens antes de confirmar o pedido.");
+    return;
+  }
+
+  const pedido = {
+    status_pedido: "EM PROCESSAMENTO",
+    total: carrinho.reduce((acc, item) => acc + item.preco, 0).toFixed(2),
+    itens: carrinho.map((item) => ({
+      quantidade: 1,
+      subtotal: item.preco,
+      produto: {
+        id: item.id,
+        nome: item.produto,
+        preco: item.preco,
+        imagemlink: item.imagem,
+      },
+    })),
+  };
+
+  try {
+    const response = await fetch("http://127.0.0.1:3000/pedidos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(pedido),
+    });
+
+    if (response.ok) {
+      const mensagem = document.getElementById("mensagem");
+      mensagem.textContent = "Pedido confirmado com sucesso!";
+      mensagem.style.display = "block";
+      limparCarrinho();
+    } else {
+      throw new Error("Erro ao confirmar pedido.");
+    }
+  } catch (error) {
+    console.error(error);
+    const mensagem = document.getElementById("mensagem");
+    mensagem.textContent = "Erro ao confirmar pedido. Tente novamente.";
+    mensagem.style.display = "block";
+  }
+}
+
+async function carregarPedidos() {
+  try {
+    const response = await fetch("http://127.0.0.1:3000/pedidos");
+    if (!response.ok) {
+      throw new Error("Erro ao carregar pedidos.");
+    }
+
+    const pedidos = await response.json();
+    const listaPedidos = document.getElementById("lista-pedidos");
+
+    //limpar lista antes de add mais
+    listaPedidos.innerHTML = "";
+
+    if (pedidos.length === 0) {
+      listaPedidos.innerHTML = "<li>Nenhum pedido encontrado.</li>";
+    } else {
+      pedidos.forEach((pedido) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+                    <div>
+                        <h3>ID do Pedido: ${pedido.id}</h3>
+                        <p>Status: ${pedido.status_pedido}</p>
+                        <p>Data do Pedido: ${new Date(
+                          pedido.data_pedido
+                        ).toLocaleString()}</p>
+                        <p>Total: R$ ${pedido.total}</p>
+                    </div>
+                    <hr>
+                `;
+        listaPedidos.appendChild(li);
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    const listaPedidos = document.getElementById("lista-pedidos");
+    listaPedidos.innerHTML =
+      "<li>Erro ao carregar pedidos. Tente novamente.</li>";
+  }
 }
