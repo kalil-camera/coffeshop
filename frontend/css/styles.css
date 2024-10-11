@@ -58,11 +58,24 @@ main {
     padding: 10px;
     text-align: center;
     background-color: #fff;
-    width: calc(50% - 20px);
-    max-width: 300px;
+    flex: 1 1 calc(30% - 20px);
+    max-width: 300px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
+
+@media (max-width: 900px) {
+    .produto {
+        flex: 1 1 calc(50% - 20px); 
+    }
+}
+
+@media (max-width: 600px) {
+    .produto {
+        flex: 1 1 100%; 
+    }
+}
+
 
 .produto img {
     width: 100%;

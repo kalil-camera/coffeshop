@@ -155,7 +155,9 @@ window.onload = carregarProdutos;
 
 async function confirmarPedido() {
   if (carrinho.length === 0) {
-    alert("O carrinho está vazio. Adicione itens antes de confirmar o pedido.");
+    const mensagem = document.getElementById("mensagem");
+    mensagem.textContent = "Não há produtos no carrinho!";
+    mensagem.style.display = "block";
     return;
   }
 
@@ -189,10 +191,11 @@ async function confirmarPedido() {
       mensagem.style.display = "block";
       limparCarrinho();
     } else {
-      throw new Error("Erro ao confirmar pedido.");
+      const mensagem = document.getElementById("mensagem");
+      mensagem.textContent = "Erro ao confirmar pedido. Tente novamente.";
+      mensagem.style.display = "block";
     }
   } catch (error) {
-    console.error(error);
     const mensagem = document.getElementById("mensagem");
     mensagem.textContent = "Erro ao confirmar pedido. Tente novamente.";
     mensagem.style.display = "block";
