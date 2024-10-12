@@ -287,3 +287,33 @@ h3 {
         margin: 10px 0;
     }
 }
+
+.itens-pedido {
+  margin-top: 20px;
+}
+
+.itens-pedido ul {
+  list-style: none;
+  padding: 0;
+}
+
+.itens-pedido li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.itens-pedido img {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.itens-pedido h3 {
+  margin-top: 20px;
+}
+
+.itens-pedido button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}

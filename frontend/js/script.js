@@ -1,8 +1,7 @@
 let carrinho = [];
 
-function adicionarAoCarrinho(produto, preco, imagem) {
-  carrinho.push({ produto, preco, imagem });
-  console.log(`Adicionado ao carrinho: ${produto}`);
+function adicionarAoCarrinho(produto, preco, imagem, id) {
+  carrinho.push({ produto, preco, imagem, id });
   salvarCarrinho();
   mostrarNotificacao(`${produto} adicionado ao carrinho!`);
 }
@@ -141,7 +140,8 @@ async function carregarProdutos() {
         <p>R$ ${preco.toFixed(2)}</p>
         <button onclick="adicionarAoCarrinho('${produto.nome}', ${preco}, '${
         produto.imagemlink
-      }')">Adicionar ao Carrinho</button>
+      }', ${produto.id})">Adicionar ao Carrinho</button>
+
       `;
       container.appendChild(produtoDiv);
     });
@@ -165,10 +165,10 @@ async function confirmarPedido() {
     status_pedido: "EM PROCESSAMENTO",
     total: carrinho.reduce((acc, item) => acc + item.preco, 0).toFixed(2),
     itens: carrinho.map((item) => ({
-      quantidade: 1,
+      quantidade: 1, // Pode ser ajustado se precisar
       subtotal: item.preco,
       produto: {
-        id: item.id,
+        id: item.id, // Certifique-se de que o ID está sendo passado
         nome: item.produto,
         preco: item.preco,
         imagemlink: item.imagem,
@@ -212,8 +212,7 @@ async function carregarPedidos() {
     const pedidos = await response.json();
     const listaPedidos = document.getElementById("lista-pedidos");
 
-    //limpar lista antes de add mais
-    listaPedidos.innerHTML = "";
+    listaPedidos.innerHTML = ""; // Limpar a lista antes de adicionar novos elementos
 
     if (pedidos.length === 0) {
       listaPedidos.innerHTML = "<li>Nenhum pedido encontrado.</li>";
@@ -221,23 +220,83 @@ async function carregarPedidos() {
       pedidos.forEach((pedido) => {
         const li = document.createElement("li");
         li.innerHTML = `
-                    <div>
-                        <h3>ID do Pedido: ${pedido.id}</h3>
-                        <p>Status: ${pedido.status_pedido}</p>
-                        <p>Data do Pedido: ${new Date(
-                          pedido.data_pedido
-                        ).toLocaleString()}</p>
-                        <p>Total: R$ ${pedido.total}</p>
-                    </div>
-                    <hr>
-                `;
+          <div>
+            <h3>ID do Pedido: ${pedido.id}</h3>
+            <p>Status: ${pedido.status_pedido}</p>
+            <p>Data do Pedido: ${new Date(
+              pedido.data_pedido
+            ).toLocaleString()}</p>
+            <p>Total: R$ ${pedido.total}</p>
+            <button onclick="carregarItensPedido(${
+              pedido.id
+            }, this)">Ver Itens</button>
+          </div>
+          <div class="detalhes-itens" id="itens-pedido-${
+            pedido.id
+          }" style="display:none;">
+            <ul class="lista-itens-pedido"></ul>
+            <h4>Total do Pedido: R$ <span class="total-pedido"></span></h4>
+          </div>
+          <hr>
+        `;
         listaPedidos.appendChild(li);
       });
     }
   } catch (error) {
-    console.error(error);
+    console.error("Erro ao carregar pedidos:", error);
     const listaPedidos = document.getElementById("lista-pedidos");
     listaPedidos.innerHTML =
       "<li>Erro ao carregar pedidos. Tente novamente.</li>";
   }
+}
+
+async function carregarItensPedido(pedidoId, botao) {
+  const detalhesDiv = document.getElementById(`itens-pedido-${pedidoId}`);
+  const listaItens = detalhesDiv.querySelector(".lista-itens-pedido");
+  const totalSpan = detalhesDiv.querySelector(".total-pedido");
+
+  if (detalhesDiv.style.display === "block") {
+    // Se já estiver aberto, fechar
+    detalhesDiv.style.display = "none";
+    botao.textContent = "Ver Itens";
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://127.0.0.1:3000/pedidos/${pedidoId}`);
+    if (!response.ok) {
+      throw new Error("Erro ao carregar itens do pedido.");
+    }
+
+    const pedido = await response.json();
+
+    listaItens.innerHTML = ""; // Limpa a lista de itens antes de adicionar novos
+
+    pedido.itens.forEach((item) => {
+      const produto = item.produto; // Obtem o objeto produto corretamente
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <img src="image/${produto.imagemlink}.jpg" alt="${
+        produto.nome
+      }" style="width: 50px; height: 50px;">
+        <span>${produto.nome} - R$ ${parseFloat(produto.preco).toFixed(
+        2
+      )}</span>
+        <span>Quantidade: ${item.quantidade}</span>
+      `;
+      listaItens.appendChild(li);
+    });
+
+    totalSpan.textContent = pedido.total; // Define o valor total do pedido
+
+    // Exibe a seção de itens do pedido
+    detalhesDiv.style.display = "block";
+    botao.textContent = "Ocultar Itens";
+  } catch (error) {
+    console.error("Erro ao carregar itens do pedido:", error);
+  }
+}
+
+function fecharDetalhes() {
+  document.getElementById("detalhes-pedido").style.display = "none";
 }

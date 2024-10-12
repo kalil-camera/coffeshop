@@ -42,6 +42,9 @@ export class PedidoService {
   async findAll(): Promise<Pedido[]> {
     return this.pedidoRepository.find({
       relations: ['itens', 'itens.produto'],
+      order: {
+        data_pedido: 'DESC', // Ordenar por coluna `data_pedido em decrescente
+      },
     });
   }
 
