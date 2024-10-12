@@ -5,8 +5,8 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Pedido } from '../pedido/pedido.entity';
-import { Produto } from '../produto/produto.entity';
+import { Pedido } from '../entity/pedido.entity';
+import { Produto } from './produto.entity';
 
 @Entity('item_pedido')
 export class ItemPedido {

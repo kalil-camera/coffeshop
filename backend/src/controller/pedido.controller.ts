@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
-import { PedidoService } from './pedido.service';
-import { Pedido } from './pedido.entity';
+import { PedidoService } from '../service/pedido.service';
+import { Pedido } from '../entity/pedido.entity';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('pedidos')

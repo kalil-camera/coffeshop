@@ -6,7 +6,7 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-import { ItemPedido } from '../item-pedido/item-pedido.entity';
+import { ItemPedido } from '../entity/item-pedido.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('pedido')

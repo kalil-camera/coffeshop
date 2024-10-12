@@ -7,8 +7,8 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { ProdutoService } from './produto.service';
-import { Produto } from './produto.entity';
+import { ProdutoService } from '../service/produto.service';
+import { Produto } from '../entity/produto.entity';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('produtos')

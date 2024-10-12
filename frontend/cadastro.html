@@ -6,7 +6,17 @@
     <title>Cadastro de Produtos - Cafeteria</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body>       
+     <header>
+<nav>
+    <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="carrinho.html">Carrinho</a></li>
+        <li><a href="pedidos.html">Meus Pedidos</a></li>
+        <li><a href="cadastro.html" style="color: red;">ADMINISTRATIVO</a></li>
+    </ul>
+</nav>
+    </header>
     <header>
         <h1>Cadastrar Produto</h1>
     </header>
@@ -22,13 +32,11 @@
                 <input type="number" id="preco" step="0.01" required>
             </div>
             <div>
-                <label for="imagemlink">Link da Imagem:</label>
+                <label for="imagemlink">Nome da imagem (deve estar dentro da pasta images):</label>
                 <input type="text" id="imagemlink" required>
             </div>
             <button type="submit">Cadastrar Produto</button>
         </form>
-        <div id="mensagem" class="mensagem" style="display: none;"></div>
-        <a href="index.html">Voltar ao Catálogo</a>
     </main>
 
     <script src="js/script.js"></script>

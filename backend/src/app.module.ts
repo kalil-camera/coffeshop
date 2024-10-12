@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Produto } from './produto/produto.entity';
-import { Pedido } from './pedido/pedido.entity';
-import { ItemPedido } from './item-pedido/item-pedido.entity';
-import { PedidoService } from './pedido/pedido.service';
-import { PedidoController } from './pedido/pedido.controller';
-import { ProdutoService } from './produto/produto.service';
-import { ProdutoController } from './produto/produto.controller';
+import { Produto } from './entity/produto.entity';
+import { Pedido } from './entity/pedido.entity';
+import { ItemPedido } from './entity/item-pedido.entity';
+import { PedidoService } from './service/pedido.service';
+import { PedidoController } from './controller/pedido.controller';
+import { ProdutoService } from './service/produto.service';
+import { ProdutoController } from './controller/produto.controller';
 
 @Module({
   imports: [
