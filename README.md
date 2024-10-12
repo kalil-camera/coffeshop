@@ -2,7 +2,7 @@
 
 ## Descrição do Projeto
 
-Este projeto foi desenvolvido por Kalil El Ammar Camera e é parte da disciplina de **Projeto Integrador Transdisciplinar 2** e consiste no desenvolvimento de uma API REST para uma cafeteria fictícia. O objetivo principal é fornecer um backend eficiente, escalável e bem estruturado utilizando o framework **NestJS** e o banco de dados **PostgreSQL**. O front end fica por conta do **Bubble.io**.
+Este projeto foi desenvolvido por Kalil El Ammar Camera e é parte da disciplina de **Projeto Integrador Transdisciplinar 2** e consiste no desenvolvimento de uma API REST para uma cafeteria fictícia. O objetivo principal é fornecer um backend eficiente, escalável e bem estruturado utilizando o framework **NestJS** e o banco de dados **PostgreSQL**. O front end foi desenvolvido de forma clássica, utilizando *HTML, TypeScript e CSS*.
 
 ### Funcionalidades Principais
 
@@ -18,7 +18,7 @@ O sistema permite:
 ## Tecnologias Utilizadas
 
 - **NestJS**: Framework Node.js para construir a API REST do back-end.
-- **HTML, CSS e JavaScript**: Front-end construido de maneira mais clássica, porém com boa performance.
+- **HTML, CSS e TypeScript**: Front-end construido de maneira mais clássica, porém com boa performance.
 - **TypeORM**: ORM para facilitar a integração com o banco de dados PostgreSQL.
 - **PostgreSQL**: Banco de dados relacional utilizado para armazenar os dados da aplicação.
 - **Node.js**: Ambiente de execução para o JavaScript server-side.
