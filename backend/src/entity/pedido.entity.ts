@@ -35,7 +35,12 @@ export class Pedido {
   })
   total: number;
 
-
+  @Column({ type: 'varchar', length: 10 })
+  @ApiProperty({
+    description: 'Avaliação do Pedido, de 0 a 5',
+    example: '5',
+  })
+  avaliacao: string;
 
   @OneToMany(() => ItemPedido, (itemPedido) => itemPedido.pedido, {
     cascade: true,

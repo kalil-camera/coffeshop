@@ -1,11 +1,4 @@
-let carrinho = [];
-
-function adicionarAoCarrinho(produto, preco, imagem, id) {
-  carrinho.push({ produto, preco, imagem, id });
-  salvarCarrinho();
-  mostrarNotificacao(`${produto} adicionado ao carrinho!`);
-}
-
+//NOTIFICAÇÕES
 function mostrarNotificacao(mensagem) {
   const notificacao = document.getElementById("notificacao");
   notificacao.textContent = mensagem;
@@ -20,16 +13,101 @@ function mostrarNotificacao(mensagem) {
   }, 3000);
 }
 
-function salvarCarrinho() {
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
-}
+//PRODUTOS
+async function carregarProdutos() {
+  try {
+    const response = await fetch("http://127.0.0.1:3000/produtos");
+    if (!response.ok) {
+      throw new Error("Erro ao carregar produtos.");
+    }
 
-function carregarCarrinho() {
-  const carrinhoSalvo = localStorage.getItem("carrinho");
-  if (carrinhoSalvo) {
-    carrinho = JSON.parse(carrinhoSalvo);
+    const produtos = await response.json();
+    const container = document.getElementById("produtos-container");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+    produtos.forEach((produto) => {
+      const preco = parseFloat(produto.preco);
+      if (isNaN(preco)) return;
+
+      const produtoDiv = document.createElement("div");
+      produtoDiv.classList.add("produto");
+      produtoDiv.innerHTML = `
+        <img src="image/${produto.imagemlink}.jpg" alt="${produto.nome}" />
+        <h3>${produto.nome}</h3>
+        <p>R$ ${preco.toFixed(2)}</p>
+        <button onclick="adicionarAoCarrinho('${produto.nome}', ${preco}, '${
+        produto.imagemlink
+      }', ${produto.id})">Adicionar ao Carrinho</button>
+      `;
+      container.appendChild(produtoDiv);
+    });
+  } catch (error) {
+    console.error(error);
   }
 }
+
+async function cadastrarProduto(event) {
+  event.preventDefault();
+
+  const nome = document.getElementById("nome").value;
+  const preco = document.getElementById("preco").value;
+  const imagemlink = document.getElementById("imagemlink").value;
+
+  const produto = {
+    nome: nome,
+    preco: parseFloat(preco),
+    imagemlink: imagemlink,
+  };
+
+  try {
+    const response = await fetch("http://127.0.0.1:3000/produtos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(produto),
+    });
+
+    const mensagem = document.getElementById("mensagem");
+    if (response.ok) {
+      mensagem.textContent = "Produto cadastrado com sucesso!";
+      mensagem.style.display = "block";
+      document.getElementById("formCadastro").reset();
+    } else {
+      mensagem.textContent = "Erro ao cadastrar!";
+      mensagem.style.display = "block";
+    }
+  } catch (error) {
+    console.error(error);
+    const mensagem = document.getElementById("mensagem");
+    mensagem.textContent = "Erro ao cadastrar produto. Tente novamente.";
+    mensagem.style.display = "block";
+  }
+}
+
+//CARRINHO
+let carrinho = [];
+
+function adicionarAoCarrinho(produto, preco, imagem, id) {
+  carrinho.push({ produto, preco, imagem, id });
+  salvarCarrinho();
+  mostrarNotificacao(`${produto} adicionado ao carrinho!`);
+}
+
+function removerDoCarrinho(index) {
+  carrinho.splice(index, 1);
+  salvarCarrinho();
+  exibirCarrinho();
+}
+
+function limparCarrinho() {
+  carrinho = [];
+  salvarCarrinho();
+  exibirCarrinho();
+}
+
 function exibirCarrinho() {
   const listaCarrinho = document.getElementById("lista-carrinho");
   const totalSpan = document.getElementById("total");
@@ -55,104 +133,18 @@ function exibirCarrinho() {
   totalSpan.textContent = total.toFixed(2);
 }
 
-function removerDoCarrinho(index) {
-  carrinho.splice(index, 1);
-  salvarCarrinho();
-  exibirCarrinho();
+function salvarCarrinho() {
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
-function limparCarrinho() {
-  carrinho = [];
-  salvarCarrinho();
-  exibirCarrinho();
-}
-
-if (window.location.pathname.includes("carrinho.html")) {
-  carregarCarrinho();
-  exibirCarrinho();
-}
-
-async function cadastrarProduto(event) {
-  event.preventDefault();
-
-  const nome = document.getElementById("nome").value;
-  const preco = document.getElementById("preco").value;
-  const imagemlink = document.getElementById("imagemlink").value;
-
-  const produto = {
-    nome: nome,
-    preco: parseFloat(preco),
-    imagemlink: imagemlink,
-  };
-
-  try {
-    const response = await fetch("http://127.0.0.1:3000/produtos", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(produto),
-    });
-
-    if (response.ok) {
-      const mensagem = document.getElementById("mensagem");
-      mensagem.textContent = "Produto cadastrado com sucesso!";
-      mensagem.style.display = "block";
-      document.getElementById("formCadastro").reset(); // Limpa o formulário
-    } else {
-      throw new Error("Erro ao cadastrar produto.");
-    }
-  } catch (error) {
-    console.error(error);
-    const mensagem = document.getElementById("mensagem");
-    mensagem.textContent = "Erro ao cadastrar produto. Tente novamente.";
-    mensagem.style.display = "block";
+function carregarCarrinho() {
+  const carrinhoSalvo = localStorage.getItem("carrinho");
+  if (carrinhoSalvo) {
+    carrinho = JSON.parse(carrinhoSalvo);
   }
 }
 
-async function carregarProdutos() {
-  try {
-    const response = await fetch("http://127.0.0.1:3000/produtos");
-    if (!response.ok) {
-      throw new Error("Erro ao carregar produtos.");
-    }
-
-    const produtos = await response.json();
-    const container = document.getElementById("produtos-container");
-
-    if (!container) {
-      return;
-    }
-
-    container.innerHTML = "";
-
-    produtos.forEach((produto) => {
-      const preco = parseFloat(produto.preco);
-      if (isNaN(preco)) {
-        return;
-      }
-
-      const produtoDiv = document.createElement("div");
-      produtoDiv.classList.add("produto");
-      produtoDiv.innerHTML = `
-        <img src="image/${produto.imagemlink}.jpg" alt="${produto.nome}" />
-        <h3>${produto.nome}</h3>
-        <p>R$ ${preco.toFixed(2)}</p>
-        <button onclick="adicionarAoCarrinho('${produto.nome}', ${preco}, '${
-        produto.imagemlink
-      }', ${produto.id})">Adicionar ao Carrinho</button>
-
-      `;
-      container.appendChild(produtoDiv);
-    });
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// carreg a produtos no iniciaa
-window.onload = carregarProdutos;
-
+// PEDIDOS
 async function confirmarPedido() {
   if (carrinho.length === 0) {
     const mensagem = document.getElementById("mensagem");
@@ -165,10 +157,10 @@ async function confirmarPedido() {
     status_pedido: "EM PROCESSAMENTO",
     total: carrinho.reduce((acc, item) => acc + item.preco, 0).toFixed(2),
     itens: carrinho.map((item) => ({
-      quantidade: 1, // Pode ser ajustado se precisar
+      quantidade: 1,
       subtotal: item.preco,
       produto: {
-        id: item.id, // Certifique-se de que o ID está sendo passado
+        id: item.id,
         nome: item.produto,
         preco: item.preco,
         imagemlink: item.imagem,
@@ -185,13 +177,12 @@ async function confirmarPedido() {
       body: JSON.stringify(pedido),
     });
 
+    const mensagem = document.getElementById("mensagem");
     if (response.ok) {
-      const mensagem = document.getElementById("mensagem");
       mensagem.textContent = "Pedido confirmado com sucesso!";
       mensagem.style.display = "block";
       limparCarrinho();
     } else {
-      const mensagem = document.getElementById("mensagem");
       mensagem.textContent = "Erro ao confirmar pedido. Tente novamente.";
       mensagem.style.display = "block";
     }
@@ -205,15 +196,12 @@ async function confirmarPedido() {
 async function carregarPedidos() {
   try {
     const response = await fetch("http://127.0.0.1:3000/pedidos");
-    if (!response.ok) {
-      throw new Error("Erro ao carregar pedidos.");
-    }
+    if (!response.ok) throw new Error("Erro ao carregar pedidos.");
 
     const pedidos = await response.json();
     const listaPedidos = document.getElementById("lista-pedidos");
 
-    listaPedidos.innerHTML = ""; // Limpar a lista antes de adicionar novos elementos
-
+    listaPedidos.innerHTML = "";
     if (pedidos.length === 0) {
       listaPedidos.innerHTML = "<li>Nenhum pedido encontrado.</li>";
     } else {
@@ -256,7 +244,6 @@ async function carregarItensPedido(pedidoId, botao) {
   const totalSpan = detalhesDiv.querySelector(".total-pedido");
 
   if (detalhesDiv.style.display === "block") {
-    // Se já estiver aberto, fechar
     detalhesDiv.style.display = "none";
     botao.textContent = "Ver Itens";
     return;
@@ -264,16 +251,13 @@ async function carregarItensPedido(pedidoId, botao) {
 
   try {
     const response = await fetch(`http://127.0.0.1:3000/pedidos/${pedidoId}`);
-    if (!response.ok) {
-      throw new Error("Erro ao carregar itens do pedido.");
-    }
+    if (!response.ok) throw new Error("Erro ao carregar itens do pedido.");
 
     const pedido = await response.json();
-
-    listaItens.innerHTML = ""; // Limpa a lista de itens antes de adicionar novos
+    listaItens.innerHTML = "";
 
     pedido.itens.forEach((item) => {
-      const produto = item.produto; // Obtem o objeto produto corretamente
+      const produto = item.produto;
       const li = document.createElement("li");
       li.innerHTML = `
         <img src="image/${produto.imagemlink}.jpg" alt="${
@@ -287,9 +271,8 @@ async function carregarItensPedido(pedidoId, botao) {
       listaItens.appendChild(li);
     });
 
-    totalSpan.textContent = pedido.total; // Define o valor total do pedido
+    totalSpan.textContent = pedido.total;
 
-    // Exibe a seção de itens do pedido
     detalhesDiv.style.display = "block";
     botao.textContent = "Ocultar Itens";
   } catch (error) {
@@ -300,3 +283,10 @@ async function carregarItensPedido(pedidoId, botao) {
 function fecharDetalhes() {
   document.getElementById("detalhes-pedido").style.display = "none";
 }
+
+if (window.location.pathname.includes("carrinho.html")) {
+  carregarCarrinho();
+  exibirCarrinho();
+}
+
+window.onload = carregarProdutos;
