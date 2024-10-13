@@ -4,9 +4,12 @@ import { Produto } from './entity/produto.entity';
 import { Pedido } from './entity/pedido.entity';
 import { ItemPedido } from './entity/item-pedido.entity';
 import { PedidoService } from './service/pedido.service';
-import { PedidoController } from './controller/pedido.controller';
 import { ProdutoService } from './service/produto.service';
+import { PedidoController } from './controller/pedido.controller';
 import { ProdutoController } from './controller/produto.controller';
+import { PedidoRepository } from './repository/pedido.repository';
+import { ProdutoRepository } from './repository/produto.repository';
+import { ItemPedidoRepository } from './repository/item-pedido.repository';
 
 @Module({
   imports: [
@@ -17,10 +20,17 @@ import { ProdutoController } from './controller/produto.controller';
       username: 'postgres',
       password: '123456',
       database: 'cafeteria',
-      entities: [, Produto, Pedido, ItemPedido],
+      entities: [Produto, Pedido, ItemPedido],
       synchronize: false,
     }),
-    TypeOrmModule.forFeature([Produto, Pedido, ItemPedido]),
+    TypeOrmModule.forFeature([
+      Pedido,
+      Produto,
+      ItemPedido,
+      PedidoRepository,
+      ProdutoRepository,
+      ItemPedidoRepository,
+    ]),
   ],
   controllers: [PedidoController, ProdutoController],
   providers: [PedidoService, ProdutoService],
