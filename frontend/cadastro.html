@@ -19,28 +19,98 @@
     </header>
 
     <header>
-        <h1>Cadastrar Produto</h1>
+        <h1>Gerenciamento de Produtos</h1>
     </header>
 
     <main>
-        <form id="formCadastro" onsubmit="cadastrarProduto(event)">
-            <div>
-                <label for="nome">Nome do Produto:</label>
-                <input type="text" id="nome" required>
-            </div>
-            <div>
-                <label for="preco">Preço:</label>
-                <input type="number" id="preco" step="0.01" required>
-            </div>
-            <div>
-                <label for="imagemlink">Nome da imagem (deve estar dentro da pasta images):</label>
-                <input type="text" id="imagemlink" required>
-            </div>
-            <button type="submit">Cadastrar Produto</button>
-        </form>
+        <!-- Cadastro de Produto -->
+        <section>
+            <h2>Cadastrar Produto</h2>
+            <form id="formCadastro" onsubmit="cadastrarProduto(event)">
+                <div>
+                    <label for="nome">Nome do Produto:</label>
+                    <input type="text" id="nome" required>
+                </div>
+                <div>
+                    <label for="preco">Preço:</label>
+                    <input type="number" id="preco" step="0.01" required>
+                </div>
+                <div>
+                    <label for="imagemlink">Nome da imagem (deve estar dentro da pasta images):</label>
+                    <input type="text" id="imagemlink" required>
+                </div>
+                <button type="submit">Cadastrar Produto</button>
+            </form>
 
-        <!-- Adicione este elemento para exibir mensagens -->
-        <p id="mensagem" class="mensagem" style="display: none;"></p>
+            <!-- Mensagem de sucesso/erro -->
+            <p id="mensagem" class="mensagem" style="display: none;"></p>
+        </section>
+
+        <!-- Lista de Produtos -->
+        <section>
+            <h2>Listar Produtos</h2>
+            <button onclick="listarProdutos()">Listar Produtos</button>
+            <table id="tabelaProdutos" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="produtosBody"></tbody>
+            </table>
+        </section>
+
+        <!-- Buscar Produto por ID -->
+        <section>
+            <h2>Buscar Produto por ID</h2>
+            <form id="formBuscar" onsubmit="buscarProduto(event)">
+                <div>
+                    <label for="idProdutoBuscar">ID do Produto:</label>
+                    <input type="number" id="idProdutoBuscar" required>
+                </div>
+                <button type="submit">Buscar Produto</button>
+            </form>
+            <p id="produtoEncontrado" style="display: none;"></p>
+        </section>
+
+        <!-- Atualizar Produto -->
+        <section>
+            <h2>Atualizar Produto</h2>
+            <form id="formAtualizar" onsubmit="atualizarProduto(event)">
+                <div>
+                    <label for="idProdutoAtualizar">ID do Produto:</label>
+                    <input type="number" id="idProdutoAtualizar" required>
+                </div>
+                <div>
+                    <label for="nomeAtualizar">Novo Nome:</label>
+                    <input type="text" id="nomeAtualizar" required>
+                </div>
+                <div>
+                    <label for="precoAtualizar">Novo Preço:</label>
+                    <input type="number" id="precoAtualizar" step="0.01" required>
+                </div>
+                <div>
+                    <label for="imagemAtualizar">Novo Nome da Imagem:</label>
+                    <input type="text" id="imagemAtualizar" required>
+                </div>
+                <button type="submit">Atualizar Produto</button>
+            </form>
+        </section>
+
+        <!-- Remover Produto -->
+        <section>
+            <h2>Remover Produto</h2>
+            <form id="formRemover" onsubmit="removerProduto(event)">
+                <div>
+                    <label for="idProdutoRemover">ID do Produto:</label>
+                    <input type="number" id="idProdutoRemover" required>
+                </div>
+                <button type="submit">Remover Produto</button>
+            </form>
+        </section>
     </main>
 
     <script src="js/script.js"></script>

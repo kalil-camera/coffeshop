@@ -87,6 +87,82 @@ async function cadastrarProduto(event) {
   }
 }
 
+function listarProdutos() {
+  fetch("http://127.0.0.1:3000/produtos")
+    .then((response) => response.json())
+    .then((produtos) => {
+      const tabela = document.getElementById("tabelaProdutos");
+      const tbody = document.getElementById("produtosBody");
+      tbody.innerHTML = "";
+
+      produtos.forEach((produto) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+                    <td>${produto.id}</td>
+                    <td>${produto.nome}</td>
+                    <td>${produto.preco}</td>
+                    <td><button onclick="removerProduto(${produto.id})">Remover</button></td>
+                `;
+        tbody.appendChild(tr);
+      });
+
+      tabela.style.display = "table";
+    })
+    .catch((error) => console.error("Erro ao listar produtos:", error));
+}
+
+function buscarProduto(event) {
+  event.preventDefault();
+  const id = document.getElementById("idProdutoBuscar").value;
+
+  fetch(`${"http://127.0.0.1:3000/produtos"}/${id}`)
+    .then((response) => response.json())
+    .then((produto) => {
+      const produtoEncontrado = document.getElementById("produtoEncontrado");
+      produtoEncontrado.style.display = "block";
+      produtoEncontrado.textContent = `Produto: ${produto.nome}, Preço: ${produto.preco}, Imagem: ${produto.imagemlink}`;
+    })
+    .catch((error) => console.error("Erro ao buscar produto:", error));
+}
+
+function atualizarProduto(event) {
+  event.preventDefault();
+
+  const id = document.getElementById("idProdutoAtualizar").value;
+  const nome = document.getElementById("nomeAtualizar").value;
+  const preco = document.getElementById("precoAtualizar").value;
+  const imagemlink = document.getElementById("imagemAtualizar").value;
+
+  fetch(`${"http://127.0.0.1:3000/produtos"}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ nome, preco, imagemlink }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("mensagem").style.display = "block";
+      document.getElementById("mensagem").textContent =
+        "Produto atualizado com sucesso!";
+      listarProdutos();
+    })
+    .catch((error) => console.error("Erro ao atualizar produto:", error));
+}
+
+function removerProduto(id) {
+  fetch(`${"http://127.0.0.1:3000/produtos"}/${id}`, {
+    method: "DELETE",
+  })
+    .then(() => {
+      document.getElementById("mensagem").style.display = "block";
+      document.getElementById("mensagem").textContent =
+        "Produto removido com sucesso!";
+      listarProdutos();
+    })
+    .catch((error) => console.error("Erro ao remover produto:", error));
+}
+
 //CARRINHO
 let carrinho = [];
 
@@ -209,12 +285,11 @@ async function carregarPedidos() {
         const li = document.createElement("li");
         li.innerHTML = `
           <div>
-            <h3>ID do Pedido: ${pedido.id}</h3>
+            <h3>Nº do Pedido: ${pedido.id}</h3>
             <p>Status: ${pedido.status_pedido}</p>
-            <p>Data do Pedido: ${new Date(
-              pedido.data_pedido
-            ).toLocaleString()}</p>
+            <p>Data: ${new Date(pedido.data_pedido).toLocaleString()}</p>
             <p>Total: R$ ${pedido.total}</p>
+            <h4>Avaliação: <span class="total-pedido"></span></h4>
             <button onclick="carregarItensPedido(${
               pedido.id
             }, this)">Ver Itens</button>
@@ -223,7 +298,6 @@ async function carregarPedidos() {
             pedido.id
           }" style="display:none;">
             <ul class="lista-itens-pedido"></ul>
-            <h4>Total do Pedido: R$ <span class="total-pedido"></span></h4>
           </div>
           <hr>
         `;
@@ -270,8 +344,6 @@ async function carregarItensPedido(pedidoId, botao) {
       `;
       listaItens.appendChild(li);
     });
-
-    totalSpan.textContent = pedido.total;
 
     detalhesDiv.style.display = "block";
     botao.textContent = "Ocultar Itens";
