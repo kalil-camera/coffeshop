@@ -32,3 +32,20 @@ CREATE TABLE item_pedido (
     FOREIGN KEY (id_produto) REFERENCES produto(id)
 );
 
+create TABLE metodo_pagamento (
+    id SERIAL PRIMARY KEY,
+    metodo VARCHAR(10)
+);
+
+create TABLE pagamento (
+    id SERIAL PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    id_metodo_pagamento INT NOT NULL,
+    data_pedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_metodo_pagamento) REFERENCES metodo_pagamento(id) ON DELETE CASCADE
+);
+
+create TABLE notificacoes (
+    id SERIAL PRIMARY KEY,
+    notificacao VARCHAR(10));
