@@ -29,7 +29,6 @@ O sistema permite:
 
 - **Node.js**: Versão 14.x ou superior
 - **NestJS CLI**: Para gerar e executar o backend NestJS
-- **VueJS CLI**: Para gerar e executar o frontend VueJS
 - **PostgreSQL**: Para o banco de dados
 
 ### Instalação
