@@ -1,9 +1,3 @@
-# Projeto Integrador Transdisciplinar 2 - Aplicativo de Cafeteria
-
-## Descrição do Projeto
-
-Este projeto foi desenvolvido por Kalil El Ammar Camera e é parte da disciplina de **Projeto Integrador Transdisciplinar 2** e consiste no desenvolvimento de uma API REST para uma cafeteria fictícia. O objetivo principal é fornecer um backend eficiente, escalável e bem estruturado utilizando o framework **NestJS** e o banco de dados **PostgreSQL**. O front end foi desenvolvido de forma clássica, utilizando *HTML, TypeScript e CSS*.
-
 ### Funcionalidades Principais
 
 O sistema permite:
